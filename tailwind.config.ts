@@ -7,12 +7,16 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: "1rem",
       screens: {
         "2xl": "1400px",
       },
     },
     extend: {
+      fontFamily: {
+        display: ["Space Grotesk", "sans-serif"],
+        body: ["DM Sans", "sans-serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -57,33 +61,46 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        squad: {
+          pink: "hsl(var(--squad-pink))",
+          dark: "hsl(var(--squad-dark))",
+          gold: "hsl(var(--squad-gold))",
+          silver: "hsl(var(--squad-silver))",
+          bronze: "hsl(var(--squad-bronze))",
+          success: "hsl(var(--squad-success))",
+          "card-dark": "hsl(var(--squad-card-dark))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+        xl: "calc(var(--radius) + 4px)",
+        "2xl": "calc(var(--radius) + 8px)",
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "slide-left": {
+          from: { transform: "translateX(0) rotate(0deg)", opacity: "1" },
+          to: { transform: "translateX(-150%) rotate(-15deg)", opacity: "0" },
+        },
+        "slide-right": {
+          from: { transform: "translateX(0) rotate(0deg)", opacity: "1" },
+          to: { transform: "translateX(150%) rotate(15deg)", opacity: "0" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "slide-left": "slide-left 0.4s ease-out forwards",
+        "slide-right": "slide-right 0.4s ease-out forwards",
       },
     },
   },
