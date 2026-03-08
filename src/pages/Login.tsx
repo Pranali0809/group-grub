@@ -73,11 +73,11 @@ const Login = () => {
   const shadowMd = '4px 4px 0px 0px hsl(0 0% 8%)';
 
   return (
-    <div className="flex min-h-screen flex-col bg-squad-pink">
+    <div className="flex min-h-screen flex-col" style={{ backgroundColor: 'hsl(348 60% 95%)' }}>
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3">
         <button
-          className="flex h-9 w-9 items-center justify-center rounded-xl bg-squad-pink border-2 border-foreground"
+          className="flex h-9 w-9 items-center justify-center rounded-xl bg-squad-pink-deep border-2 border-foreground"
           style={{ boxShadow: shadowSm }}
         >
           <ArrowLeft className="h-4 w-4 text-foreground" strokeWidth={2.5} />
@@ -86,7 +86,7 @@ const Login = () => {
           Squad Memory
         </h2>
         <button
-          className="flex h-9 w-9 items-center justify-center rounded-xl bg-squad-pink border-2 border-foreground"
+          className="flex h-9 w-9 items-center justify-center rounded-xl bg-squad-pink-deep border-2 border-foreground"
           style={{ boxShadow: shadowSm }}
         >
           <MoreVertical className="h-4 w-4 text-foreground" strokeWidth={2.5} />
