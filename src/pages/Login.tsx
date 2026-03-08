@@ -69,15 +69,6 @@ const Login = () => {
     }
   };
 
-  const navItems = [
-    { icon: Home, label: 'Home', path: '/' },
-    { icon: Users, label: 'Squads', path: '/squads' },
-    { icon: Heart, label: 'Wishlist', path: '/wishlist' },
-    { icon: Utensils, label: 'Hangouts', path: '/hangouts' },
-    { icon: User, label: 'Profile', path: '/profile' },
-  ];
-
-  // Retro solid box-shadow style
   const shadowSm = '3px 3px 0px 0px hsl(0 0% 8%)';
   const shadowMd = '4px 4px 0px 0px hsl(0 0% 8%)';
 
