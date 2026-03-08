@@ -6,7 +6,7 @@ import PageHeader from '@/components/PageHeader';
 import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
 
-const shadow = '4px 4px 0px 0px hsl(0 0% 8%)';
+const shadow = '3px 3px 0px 0px hsl(0 0% 8%)';
 
 const Voting = () => {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -61,17 +61,17 @@ const Voting = () => {
 
   if (!current && restaurants.length > 0 && currentIndex >= restaurants.length) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center px-5" style={{ backgroundColor: 'hsl(348 60% 95%)' }}>
-        <h2 className="font-display text-2xl font-bold uppercase italic text-foreground">Voting Complete!</h2>
-        <p className="mt-2 text-xs font-display uppercase tracking-[0.15em] text-muted-foreground">Waiting for other members...</p>
+      <div className="flex min-h-screen flex-col items-center justify-center px-4" style={{ backgroundColor: 'hsl(348 60% 95%)' }}>
+        <h2 className="font-display text-xl font-bold uppercase italic text-foreground">Voting Complete!</h2>
+        <p className="mt-2 text-[9px] font-display uppercase tracking-[0.2em] text-muted-foreground">Waiting for other members...</p>
         <button onClick={() => navigate(`/results/${sessionId}`)}
-          className="mt-6 rounded-full bg-squad-pink border-2 border-foreground px-8 py-3.5 font-display text-sm font-bold uppercase tracking-[0.15em] text-foreground"
+          className="mt-5 rounded-full bg-squad-pink border-2 border-foreground px-6 py-3 font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
           style={{ boxShadow: shadow }}>View Results</button>
       </div>
     );
   }
 
-  if (!current) return <div className="flex min-h-screen items-center justify-center font-display text-sm uppercase">Loading...</div>;
+  if (!current) return <div className="flex min-h-screen items-center justify-center font-display text-[10px] uppercase tracking-[0.2em]">Loading...</div>;
 
   const tags = [current.cuisine_tag, current.price_range, current.highlight_tag].filter(Boolean);
 
@@ -80,13 +80,13 @@ const Voting = () => {
       <PageHeader title="Squad Voting" showBack />
 
       {/* Progress */}
-      <div className="flex items-center justify-between px-5 py-2">
-        <span className="text-[11px] font-display uppercase tracking-[0.15em] font-bold text-foreground">Session Progress</span>
-        <span className="text-[11px] font-display uppercase tracking-[0.15em] font-bold text-muted-foreground">{totalVoted}/{totalRestaurants} Voted</span>
+      <div className="flex items-center justify-between px-4 py-2">
+        <span className="text-[9px] font-display uppercase tracking-[0.2em] font-bold text-foreground">Session Progress</span>
+        <span className="text-[9px] font-display uppercase tracking-[0.2em] font-bold text-muted-foreground">{totalVoted}/{totalRestaurants} Voted</span>
       </div>
 
       {/* Card */}
-      <div className="flex flex-1 items-center justify-center px-5">
+      <div className="flex flex-1 items-center justify-center px-4">
         <motion.div
           style={{ x, rotate, opacity }}
           drag="x"
@@ -96,35 +96,35 @@ const Voting = () => {
             animationDir === 'left' ? 'animate-slide-left' : animationDir === 'right' ? 'animate-slide-right' : ''
           }`}
         >
-          <div className="overflow-hidden rounded-2xl border-2 border-foreground bg-card" style={{ boxShadow: '6px 6px 0px 0px hsl(0 0% 8%)' }}>
-            <div className="relative h-72 w-full overflow-hidden">
+          <div className="overflow-hidden rounded-2xl border-2 border-foreground bg-card" style={{ boxShadow: '4px 4px 0px 0px hsl(0 0% 8%)' }}>
+            <div className="relative h-64 w-full overflow-hidden">
               {current.restaurant_image ? (
                 <img src={current.restaurant_image} alt={current.restaurant_name} className="h-full w-full object-cover" />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-muted"><span className="text-6xl">🍽️</span></div>
+                <div className="flex h-full w-full items-center justify-center bg-muted"><span className="text-5xl">🍽️</span></div>
               )}
               {tags.length > 0 && (
-                <div className="absolute bottom-3 left-3 flex flex-wrap gap-1">
+                <div className="absolute bottom-2 left-2 flex flex-wrap gap-1">
                   {tags.map((tag, i) => (
-                    <span key={i} className="rounded-full bg-squad-pink border border-foreground px-2.5 py-1 text-[10px] font-display uppercase font-bold text-foreground">{tag}</span>
+                    <span key={i} className="rounded-full bg-squad-pink border-2 border-foreground px-2 py-0.5 text-[8px] font-display uppercase font-bold text-foreground">{tag}</span>
                   ))}
                 </div>
               )}
             </div>
 
-            <div className="border-t-2 border-foreground bg-card p-4">
+            <div className="border-t-2 border-foreground bg-card p-3">
               <div className="flex items-center justify-between">
-                <h3 className="font-display text-lg font-bold text-foreground uppercase">{current.restaurant_name}</h3>
+                <h3 className="font-display text-base font-bold text-foreground uppercase">{current.restaurant_name}</h3>
                 {current.link && (
                   <a href={current.link} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
-                    className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-foreground bg-squad-pink"
+                    className="flex h-8 w-8 items-center justify-center rounded-xl border-2 border-foreground bg-squad-pink"
                     style={{ boxShadow: '2px 2px 0px 0px hsl(0 0% 8%)' }}>
-                    <ExternalLink className="h-4 w-4 text-foreground" strokeWidth={2.5} />
+                    <ExternalLink className="h-3.5 w-3.5 text-foreground" strokeWidth={2.5} />
                   </a>
                 )}
               </div>
               {current.cuisine_tag && (
-                <p className="mt-1 text-[11px] font-display uppercase tracking-[0.1em] text-muted-foreground">
+                <p className="mt-1 text-[9px] font-display uppercase tracking-[0.1em] text-muted-foreground">
                   {[current.cuisine_tag, current.price_range, current.highlight_tag].filter(Boolean).join(' • ')}
                 </p>
               )}
@@ -134,16 +134,16 @@ const Voting = () => {
       </div>
 
       {/* Buttons */}
-      <div className="flex items-center justify-center gap-4 px-5 pb-6 pt-4">
+      <div className="flex items-center justify-center gap-3 px-4 pb-5 pt-3">
         <button onClick={() => castVote('reject')}
-          className="flex items-center gap-2 rounded-full border-2 border-foreground bg-card px-7 py-3.5 font-display text-sm font-bold uppercase tracking-[0.1em] text-foreground"
+          className="flex items-center gap-2 rounded-full border-2 border-foreground bg-card px-6 py-3 font-display text-[11px] font-bold uppercase tracking-[0.15em] text-foreground"
           style={{ boxShadow: shadow }}>
-          <ArrowLeft className="h-5 w-5" strokeWidth={2.5} /> Reject
+          <ArrowLeft className="h-4 w-4" strokeWidth={2.5} /> Reject
         </button>
         <button onClick={() => castVote('accept')}
-          className="flex items-center gap-2 rounded-full border-2 border-foreground bg-squad-pink px-7 py-3.5 font-display text-sm font-bold uppercase tracking-[0.1em] text-foreground"
+          className="flex items-center gap-2 rounded-full border-2 border-foreground bg-squad-pink px-6 py-3 font-display text-[11px] font-bold uppercase tracking-[0.15em] text-foreground"
           style={{ boxShadow: shadow }}>
-          Accept <ArrowRight className="h-5 w-5" strokeWidth={2.5} />
+          Accept <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
         </button>
       </div>
     </div>
