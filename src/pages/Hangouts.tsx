@@ -62,16 +62,6 @@ const Hangouts = () => {
       );
 
       setHangouts(updated);
-          const hangoutDate = parseISO(`${h.scheduled_date}T${h.scheduled_time}`);
-          if (isPast(hangoutDate) && h.status === 'upcoming') {
-            await supabase.from('hangouts').update({ status: 'completed' }).eq('id', h.id);
-            return { ...h, status: 'completed' };
-          }
-          return h;
-        })
-      );
-
-      setHangouts(updated);
       setLoading(false);
     };
     fetchHangouts();
