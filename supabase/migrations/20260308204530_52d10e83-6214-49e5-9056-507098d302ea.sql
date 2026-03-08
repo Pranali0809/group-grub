@@ -1,0 +1,1 @@
+ALTER TABLE public.session_restaurants ADD COLUMN IF NOT EXISTS link text;
