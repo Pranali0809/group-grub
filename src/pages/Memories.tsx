@@ -5,11 +5,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Input } from '@/components/ui/input';
 import PageHeader from '@/components/PageHeader';
 import BottomNav from '@/components/BottomNav';
-import { Upload, Send } from 'lucide-react';
+import { Upload } from 'lucide-react';
 import { toast } from 'sonner';
 
-const shadow = '4px 4px 0px 0px hsl(0 0% 8%)';
-const shadowSm = '3px 3px 0px 0px hsl(0 0% 8%)';
+const shadow = '3px 3px 0px 0px hsl(0 0% 8%)';
+const shadowSm = '2px 2px 0px 0px hsl(0 0% 8%)';
 
 const Memories = () => {
   const { hangoutId } = useParams<{ hangoutId: string }>();
@@ -18,6 +18,9 @@ const Memories = () => {
   const [memories, setMemories] = useState<any[]>([]);
   const [newComment, setNewComment] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [comments, setComments] = useState<{ name: string; text: string }[]>([
+    // Placeholder comments to match Figma layout
+  ]);
 
   useEffect(() => {
     if (!hangoutId) return;
@@ -46,64 +49,70 @@ const Memories = () => {
     setMemories(data || []);
   };
 
-  if (!hangout) return <div className="flex min-h-screen items-center justify-center font-display text-xs uppercase">Loading...</div>;
+  const handlePostComment = () => {
+    if (!newComment.trim()) return;
+    setComments(prev => [...prev, { name: 'You', text: newComment.trim() }]);
+    setNewComment('');
+  };
+
+  if (!hangout) return <div className="flex min-h-screen items-center justify-center font-display text-[10px] uppercase tracking-[0.2em]">Loading...</div>;
 
   return (
     <div className="flex min-h-screen flex-col pb-20" style={{ backgroundColor: 'hsl(348 60% 95%)' }}>
       <PageHeader title="Squad Memory" showBack />
 
-      <div className="flex-1 px-5 pt-4 space-y-4">
-        {/* Hangout Info */}
+      <div className="flex-1 px-4 pt-3 space-y-3">
+        {/* Hangout Info Card */}
         <div className="overflow-hidden rounded-2xl border-2 border-foreground bg-card" style={{ boxShadow: shadow }}>
           {hangout.restaurant_image ? (
-            <div className="relative">
-              <img src={hangout.restaurant_image} alt={hangout.restaurant_name} className="h-40 w-full object-cover" />
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-foreground/70 to-transparent p-3">
-                <h2 className="font-display text-lg font-bold text-card uppercase">{hangout.restaurant_name}</h2>
-                <p className="text-[9px] font-display uppercase tracking-[0.15em] text-card/80">
+            <img src={hangout.restaurant_image} alt={hangout.restaurant_name} className="h-32 w-full object-cover" />
+          ) : (
+            <div className="flex h-32 w-full items-center justify-center bg-muted"><span className="text-4xl">🍽️</span></div>
+          )}
+          <div className="border-t-2 border-foreground p-3">
+            <div className="flex items-start justify-between">
+              <div>
+                <h2 className="font-display text-base font-bold uppercase tracking-[0.05em] text-foreground">{hangout.restaurant_name}</h2>
+                <p className="mt-0.5 text-[9px] font-display uppercase tracking-[0.15em] text-muted-foreground">
                   {hangout.scheduled_date} • {hangout.scheduled_time}
                 </p>
               </div>
+              {hangout.status === 'completed' && (
+                <span className="rounded-full bg-squad-success border-2 border-foreground px-2.5 py-0.5 text-[8px] font-display uppercase font-bold text-card">Completed</span>
+              )}
             </div>
-          ) : (
-            <div className="p-4">
-              <h2 className="font-display text-lg font-bold uppercase text-foreground">{hangout.restaurant_name}</h2>
-            </div>
-          )}
-          {hangout.status === 'completed' && (
-            <div className="border-t-2 border-foreground p-2">
-              <span className="rounded-full bg-squad-success border border-foreground px-2 py-0.5 text-[8px] font-display uppercase font-bold text-card">Completed</span>
-            </div>
-          )}
+          </div>
         </div>
 
-        {/* Upload Button */}
+        {/* Upload Photo Button */}
         <label
-          className="flex w-full cursor-pointer items-center justify-center gap-2 h-12 rounded-full border-2 border-dashed border-foreground bg-card font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:bg-squad-pink"
+          className="flex w-full cursor-pointer items-center justify-center gap-2 h-10 rounded-full border-2 border-foreground bg-card font-display text-[10px] font-bold uppercase tracking-[0.2em] text-foreground transition-colors hover:bg-squad-pink"
           style={{ boxShadow: shadowSm }}
         >
-          <Upload className="h-4 w-4" strokeWidth={2.5} />
+          <Upload className="h-3.5 w-3.5" strokeWidth={2.5} />
           {uploading ? 'Uploading...' : 'Upload Photo'}
           <input type="file" accept="image/*" className="hidden" onChange={handleUpload} disabled={uploading} />
         </label>
 
-        {/* Photo Dump */}
+        {/* Photo Dump Section */}
         <div>
-          <h3 className="mb-2 flex items-center gap-2 text-[9px] font-display uppercase tracking-[0.2em] font-bold text-foreground">
+          <h3 className="mb-2 flex items-center gap-2 text-[9px] font-display uppercase tracking-[0.25em] font-bold text-foreground">
             Photo Dump
-            <span className="rounded-full bg-squad-pink-deep border border-foreground px-2 py-0.5 text-[8px] font-display font-bold text-foreground">
+            <span className="rounded-full bg-squad-pink-deep border-2 border-foreground px-2 py-0.5 text-[8px] font-display font-bold text-foreground">
               {memories.length} Photos
             </span>
           </h3>
           {memories.length === 0 ? (
-            <div className="py-4 text-center text-muted-foreground font-display text-xs uppercase">No memories yet</div>
+            <div className="py-4 text-center text-muted-foreground font-display text-[10px] uppercase tracking-[0.15em]">No memories yet</div>
           ) : (
             <div className="grid grid-cols-2 gap-2">
               {memories.map((memory) => (
-                <div key={memory.id} className="overflow-hidden rounded-xl border-2 border-foreground" style={{ boxShadow: '2px 2px 0px 0px hsl(0 0% 8%)' }}>
-                  <img src={memory.image_url} alt="" className="h-32 w-full object-cover" />
+                <div key={memory.id} className="overflow-hidden rounded-xl border-2 border-foreground bg-card" style={{ boxShadow: shadowSm }}>
+                  <img src={memory.image_url} alt="" className="h-28 w-full object-cover" />
                   {memory.caption && (
-                    <p className="border-t border-foreground bg-card p-1.5 text-[9px] font-display text-muted-foreground">{memory.caption}</p>
+                    <div className="border-t-2 border-foreground p-1.5">
+                      <span className="rounded-full bg-squad-pink border border-foreground px-2 py-0.5 text-[7px] font-display uppercase font-bold text-foreground">{memory.caption}</span>
+                    </div>
                   )}
                 </div>
               ))}
@@ -111,18 +120,29 @@ const Memories = () => {
           )}
         </div>
 
-        {/* Talk About It */}
+        {/* Talk About It Section */}
         <div>
-          <h3 className="mb-2 text-[9px] font-display uppercase tracking-[0.2em] font-bold text-foreground">Talk About It</h3>
-          <div className="rounded-2xl border-2 border-foreground bg-card p-3" style={{ boxShadow: shadowSm }}>
-            <div className="flex gap-2">
-              <div className="flex-1 rounded-full" style={{ boxShadow: '2px 2px 0px 0px hsl(0 0% 8%)' }}>
-                <Input placeholder="Add a comment to the memory..." value={newComment} onChange={(e) => setNewComment(e.target.value)}
-                  className="h-10 rounded-full border-2 border-foreground bg-card text-xs px-4" />
+          <h3 className="mb-2 text-[9px] font-display uppercase tracking-[0.25em] font-bold text-foreground">Talk About It</h3>
+          <div className="rounded-2xl border-2 border-foreground bg-card p-3 space-y-2" style={{ boxShadow: shadow }}>
+            {/* Comment bubbles */}
+            {comments.map((comment, i) => (
+              <div key={i} className="rounded-xl border-2 border-foreground bg-squad-pink p-2" style={{ boxShadow: shadowSm }}>
+                <p className="text-[8px] font-display uppercase tracking-[0.15em] font-bold text-foreground">{comment.name}</p>
+                <p className="mt-0.5 text-[10px] font-body text-foreground">{comment.text}</p>
               </div>
-              <button className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-foreground bg-squad-pink"
-                style={{ boxShadow: '2px 2px 0px 0px hsl(0 0% 8%)' }}>
-                <Send className="h-3.5 w-3.5 text-foreground" strokeWidth={2.5} />
+            ))}
+
+            {/* Input + Post */}
+            <div className="flex gap-2 pt-1">
+              <div className="flex-1 rounded-full" style={{ boxShadow: shadowSm }}>
+                <Input placeholder="Add a comment to the memory..." value={newComment} onChange={(e) => setNewComment(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && handlePostComment()}
+                  className="h-9 rounded-full border-2 border-foreground bg-card text-[10px] px-3 font-body" />
+              </div>
+              <button onClick={handlePostComment}
+                className="flex h-9 items-center justify-center rounded-full border-2 border-foreground bg-squad-pink px-4 font-display text-[9px] font-bold uppercase tracking-[0.15em] text-foreground"
+                style={{ boxShadow: shadowSm }}>
+                Post
               </button>
             </div>
           </div>

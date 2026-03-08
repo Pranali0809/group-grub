@@ -8,8 +8,8 @@ import PageHeader from '@/components/PageHeader';
 import BottomNav from '@/components/BottomNav';
 import { Trophy, Star, CalendarDays } from 'lucide-react';
 
-const shadow = '4px 4px 0px 0px hsl(0 0% 8%)';
-const shadowSm = '3px 3px 0px 0px hsl(0 0% 8%)';
+const shadow = '3px 3px 0px 0px hsl(0 0% 8%)';
+const shadowSm = '2px 2px 0px 0px hsl(0 0% 8%)';
 
 type ResultItem = {
   wishlist_item_id: string; restaurant_name: string; restaurant_image: string | null;
@@ -66,70 +66,70 @@ const Results = () => {
   const medals = ['🥇', '🥈', '🥉'];
 
   return (
-    <div className="flex min-h-screen flex-col pb-20" style={{ backgroundColor: 'hsl(348 60% 95%)' }}>
+    <div className="flex min-h-screen flex-col pb-16" style={{ backgroundColor: 'hsl(348 60% 95%)' }}>
       <PageHeader title="Voting Results" showBack />
-      <div className="flex-1 px-5 pt-4 space-y-4">
+      <div className="flex-1 px-4 pt-3 space-y-3">
         {winner && (
-          <div className="rounded-2xl border-2 border-foreground bg-card p-5 text-center" style={{ boxShadow: shadow }}>
-            <Trophy className="mx-auto h-10 w-10 text-squad-gold" />
-            <h2 className="mt-2 font-display text-2xl font-bold uppercase italic text-foreground">The Winner!</h2>
-            <p className="text-[11px] font-display uppercase tracking-[0.15em] font-bold text-muted-foreground">Squad Consensus Reached</p>
+          <div className="rounded-2xl border-2 border-foreground bg-card p-4 text-center" style={{ boxShadow: shadow }}>
+            <Trophy className="mx-auto h-8 w-8 text-squad-gold" />
+            <h2 className="mt-1.5 font-display text-xl font-bold uppercase italic text-foreground">The Winner!</h2>
+            <p className="text-[9px] font-display uppercase tracking-[0.2em] font-bold text-muted-foreground">Squad Consensus Reached</p>
             {winner.restaurant_image && (
-              <div className="mt-4 overflow-hidden rounded-xl border-2 border-foreground">
-                <img src={winner.restaurant_image} alt={winner.restaurant_name} className="h-36 w-full object-cover" />
+              <div className="mt-3 overflow-hidden rounded-xl border-2 border-foreground">
+                <img src={winner.restaurant_image} alt={winner.restaurant_name} className="h-28 w-full object-cover" />
               </div>
             )}
-            <div className="mt-3 flex items-center justify-center gap-2">
-              <span className="text-xl">🥇</span>
-              <span className="font-display text-base font-bold uppercase tracking-[0.08em] text-foreground">{winner.restaurant_name}</span>
+            <div className="mt-2.5 flex items-center justify-center gap-2">
+              <span className="text-lg">🥇</span>
+              <span className="font-display text-sm font-bold uppercase tracking-[0.08em] text-foreground">{winner.restaurant_name}</span>
             </div>
-            <p className="text-[11px] font-display uppercase tracking-[0.1em] text-muted-foreground">{winner.accept_count} Accept Votes</p>
+            <p className="text-[9px] font-display uppercase tracking-[0.15em] text-muted-foreground">{winner.accept_count} Accept Votes</p>
             <button onClick={() => { setSelectedRestaurant(winner); setHangoutOpen(true); }}
-              className="mt-4 flex w-full items-center justify-center gap-2 h-12 rounded-full bg-squad-lavender border-2 border-foreground font-display text-sm font-bold uppercase tracking-[0.15em] text-foreground"
+              className="mt-3 flex w-full items-center justify-center gap-2 h-10 rounded-full bg-squad-lavender border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
               style={{ boxShadow: shadowSm }}>
-              <CalendarDays className="h-5 w-5" strokeWidth={2.5} /> Plan Hangout
+              <CalendarDays className="h-4 w-4" strokeWidth={2.5} /> Plan Hangout
             </button>
           </div>
         )}
 
         <div className="space-y-2">
           {results.map((item, index) => (
-            <div key={item.wishlist_item_id} className="flex items-center gap-3 rounded-2xl border-2 border-foreground bg-card p-3" style={{ boxShadow: shadowSm }}>
-              <div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-foreground bg-squad-pink text-base">
-                {index < 3 ? medals[index] : <span className="font-display text-xs font-bold">{index + 1}</span>}
+            <div key={item.wishlist_item_id} className="flex items-center gap-2.5 rounded-2xl border-2 border-foreground bg-card p-2.5" style={{ boxShadow: shadowSm }}>
+              <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-foreground bg-squad-pink text-sm">
+                {index < 3 ? medals[index] : <span className="font-display text-[10px] font-bold">{index + 1}</span>}
               </div>
-              {item.restaurant_image && <img src={item.restaurant_image} alt="" className="h-11 w-11 rounded-lg border border-foreground object-cover" />}
+              {item.restaurant_image && <img src={item.restaurant_image} alt="" className="h-10 w-10 rounded-lg border-2 border-foreground object-cover" />}
               <div className="flex-1 min-w-0">
-                <h3 className="font-display text-sm font-bold uppercase tracking-[0.06em] text-foreground">{item.restaurant_name}</h3>
-                <p className="text-[10px] font-display uppercase text-muted-foreground">Accept Votes</p>
+                <h3 className="font-display text-[11px] font-bold uppercase tracking-[0.06em] text-foreground">{item.restaurant_name}</h3>
+                <p className="text-[8px] font-display uppercase tracking-[0.1em] text-muted-foreground">Accept Votes</p>
               </div>
               <div className="text-right">
-                <Star className="mx-auto h-5 w-5 text-squad-gold" />
-                <p className="text-[11px] font-display font-bold text-foreground">{item.accept_count}</p>
+                <Star className="mx-auto h-4 w-4 text-squad-gold" />
+                <p className="text-[10px] font-display font-bold text-foreground">{item.accept_count}</p>
               </div>
             </div>
           ))}
         </div>
 
         {sessionInfo && (
-          <div className="rounded-2xl border-2 border-dashed border-foreground p-3 text-center" style={{ boxShadow: shadowSm }}>
-            <p className="text-[11px] font-display uppercase tracking-[0.15em] font-bold text-muted-foreground">{sessionInfo}</p>
+          <div className="rounded-2xl border-2 border-dashed border-foreground p-2.5 text-center" style={{ boxShadow: shadowSm }}>
+            <p className="text-[9px] font-display uppercase tracking-[0.2em] font-bold text-muted-foreground">{sessionInfo}</p>
           </div>
         )}
       </div>
 
       <Dialog open={hangoutOpen} onOpenChange={setHangoutOpen}>
-        <DialogContent className="border-2 border-foreground rounded-2xl" style={{ boxShadow: '6px 6px 0px 0px hsl(0 0% 8%)' }}>
-          <DialogHeader><DialogTitle className="font-display text-base uppercase tracking-[0.15em] font-bold">Plan Hangout</DialogTitle></DialogHeader>
-          <p className="font-display text-sm font-bold uppercase text-foreground">{selectedRestaurant?.restaurant_name}</p>
+        <DialogContent className="border-2 border-foreground rounded-2xl" style={{ boxShadow: '4px 4px 0px 0px hsl(0 0% 8%)' }}>
+          <DialogHeader><DialogTitle className="font-display text-[11px] uppercase tracking-[0.2em] font-bold">Plan Hangout</DialogTitle></DialogHeader>
+          <p className="font-display text-[11px] font-bold uppercase text-foreground">{selectedRestaurant?.restaurant_name}</p>
           <div className="rounded-full" style={{ boxShadow: shadowSm }}>
-            <Input type="date" value={hangoutDate} onChange={(e) => setHangoutDate(e.target.value)} className="h-12 rounded-full border-2 border-foreground bg-card font-body text-sm px-5" />
+            <Input type="date" value={hangoutDate} onChange={(e) => setHangoutDate(e.target.value)} className="h-10 rounded-full border-2 border-foreground bg-card font-body text-xs px-4" />
           </div>
           <div className="rounded-full" style={{ boxShadow: shadowSm }}>
-            <Input type="time" value={hangoutTime} onChange={(e) => setHangoutTime(e.target.value)} className="h-12 rounded-full border-2 border-foreground bg-card font-body text-sm px-5" />
+            <Input type="time" value={hangoutTime} onChange={(e) => setHangoutTime(e.target.value)} className="h-10 rounded-full border-2 border-foreground bg-card font-body text-xs px-4" />
           </div>
           <button onClick={handleCreateHangout}
-            className="w-full h-12 rounded-full bg-squad-pink border-2 border-foreground font-display text-sm font-bold uppercase tracking-[0.15em] text-foreground"
+            className="w-full h-10 rounded-full bg-squad-pink border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
             style={{ boxShadow: shadow }}>Create Hangout</button>
         </DialogContent>
       </Dialog>
