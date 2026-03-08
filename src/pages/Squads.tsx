@@ -2,13 +2,15 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import PageHeader from '@/components/PageHeader';
 import BottomNav from '@/components/BottomNav';
 import { Users, Settings, Copy } from 'lucide-react';
 import { toast } from 'sonner';
+
+const shadow = '4px 4px 0px 0px hsl(0 0% 8%)';
+const shadowSm = '3px 3px 0px 0px hsl(0 0% 8%)';
 
 const Squads = () => {
   const { user } = useAuth();
@@ -34,7 +36,6 @@ const Squads = () => {
         .select('*')
         .in('id', groupIds);
       
-      // Get member counts
       const groupsWithCounts = await Promise.all(
         (groupsData || []).map(async (group) => {
           const { count } = await supabase
@@ -62,10 +63,7 @@ const Squads = () => {
       .single();
     
     if (error) { toast.error(error.message); return; }
-    
-    // Add creator as member
     await supabase.from('group_members').insert({ group_id: group.id, user_id: user.id });
-    
     setCreateOpen(false);
     setNewGroupName('');
     toast.success('Squad created!');
@@ -81,7 +79,6 @@ const Squads = () => {
       .single();
     
     if (!group) { toast.error('Invalid invite code'); return; }
-    
     const { error } = await supabase
       .from('group_members')
       .insert({ group_id: group.id, user_id: user.id });
@@ -91,7 +88,6 @@ const Squads = () => {
       else toast.error(error.message);
       return;
     }
-    
     setJoinOpen(false);
     setJoinCode('');
     toast.success('Joined squad!');
@@ -99,98 +95,125 @@ const Squads = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-background pb-20">
-      <PageHeader title="My Squads" accentBg />
+    <div className="flex min-h-screen flex-col pb-20" style={{ backgroundColor: 'hsl(348 60% 95%)' }}>
+      <PageHeader title="My Squads" />
 
-      <div className="flex-1 px-4 pt-4 space-y-3">
+      <div className="flex-1 px-5 pt-4 space-y-3">
         {/* Create Squad */}
         <Dialog open={createOpen} onOpenChange={setCreateOpen}>
           <DialogTrigger asChild>
-            <Button className="w-full rounded-xl bg-primary text-primary-foreground font-display uppercase tracking-wider">
+            <button
+              className="w-full h-12 rounded-full bg-squad-pink border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
+              style={{ boxShadow: shadow }}
+            >
               Create New Squad
-            </Button>
+            </button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="border-2 border-foreground rounded-2xl" style={{ boxShadow: '6px 6px 0px 0px hsl(0 0% 8%)' }}>
             <DialogHeader>
-              <DialogTitle className="font-display uppercase">Create Squad</DialogTitle>
+              <DialogTitle className="font-display text-sm uppercase tracking-[0.2em] font-bold">Create Squad</DialogTitle>
             </DialogHeader>
-            <Input
-              placeholder="Squad name"
-              value={newGroupName}
-              onChange={(e) => setNewGroupName(e.target.value)}
-            />
-            <Button onClick={handleCreateGroup} className="w-full bg-primary text-primary-foreground font-display uppercase">
+            <div className="rounded-full" style={{ boxShadow: shadowSm }}>
+              <Input
+                placeholder="Squad name"
+                value={newGroupName}
+                onChange={(e) => setNewGroupName(e.target.value)}
+                className="h-11 rounded-full border-2 border-foreground bg-card font-body text-xs px-5"
+              />
+            </div>
+            <button
+              onClick={handleCreateGroup}
+              className="w-full h-11 rounded-full bg-squad-pink border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
+              style={{ boxShadow: shadow }}
+            >
               Create
-            </Button>
+            </button>
           </DialogContent>
         </Dialog>
 
         {/* Join with Code */}
         <Dialog open={joinOpen} onOpenChange={setJoinOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline" className="w-full rounded-xl font-display uppercase tracking-wider">
+            <button
+              className="w-full h-12 rounded-full bg-squad-lavender border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
+              style={{ boxShadow: shadow }}
+            >
               Join with Code
-            </Button>
+            </button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="border-2 border-foreground rounded-2xl" style={{ boxShadow: '6px 6px 0px 0px hsl(0 0% 8%)' }}>
             <DialogHeader>
-              <DialogTitle className="font-display uppercase">Join Squad</DialogTitle>
+              <DialogTitle className="font-display text-sm uppercase tracking-[0.2em] font-bold">Join Squad</DialogTitle>
             </DialogHeader>
-            <Input
-              placeholder="Enter invite code"
-              value={joinCode}
-              onChange={(e) => setJoinCode(e.target.value)}
-            />
-            <Button onClick={handleJoinGroup} className="w-full bg-primary text-primary-foreground font-display uppercase">
+            <div className="rounded-full" style={{ boxShadow: shadowSm }}>
+              <Input
+                placeholder="Enter invite code"
+                value={joinCode}
+                onChange={(e) => setJoinCode(e.target.value)}
+                className="h-11 rounded-full border-2 border-foreground bg-card font-body text-xs px-5"
+              />
+            </div>
+            <button
+              onClick={handleJoinGroup}
+              className="w-full h-11 rounded-full bg-squad-pink border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
+              style={{ boxShadow: shadow }}
+            >
               Join
-            </Button>
+            </button>
           </DialogContent>
         </Dialog>
 
         {/* Current Squads */}
-        <div className="mt-4">
-          <h2 className="mb-3 text-xs font-display uppercase tracking-wider text-muted-foreground">
+        <div className="mt-2">
+          <h2 className="mb-3 text-[9px] font-display uppercase tracking-[0.2em] font-bold text-foreground">
             Current Squads ({groups.length})
           </h2>
           
           {loading ? (
-            <div className="py-8 text-center text-muted-foreground">Loading...</div>
+            <div className="py-8 text-center text-muted-foreground font-display text-xs uppercase">Loading...</div>
           ) : groups.length === 0 ? (
-            <div className="py-8 text-center text-muted-foreground">No squads yet. Create or join one!</div>
+            <div className="py-8 text-center text-muted-foreground font-display text-xs uppercase">No squads yet</div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-3">
               {groups.map((group) => (
                 <button
                   key={group.id}
                   onClick={() => navigate(`/squads/${group.id}`)}
-                  className="flex w-full items-center gap-3 rounded-xl bg-card p-3 text-left transition-colors hover:bg-muted"
+                  className="flex w-full items-center gap-3 rounded-2xl border-2 border-foreground bg-card p-3 text-left"
+                  style={{ boxShadow: shadowSm }}
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/20">
-                    <Users className="h-5 w-5 text-primary" />
+                  <div
+                    className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-foreground bg-squad-pink"
+                    style={{ boxShadow: '2px 2px 0px 0px hsl(0 0% 8%)' }}
+                  >
+                    <Users className="h-4 w-4 text-foreground" strokeWidth={2.5} />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-display text-sm font-bold uppercase">{group.group_name}</h3>
-                    <p className="text-xs text-muted-foreground">{group.memberCount} Members</p>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-display text-[11px] font-bold uppercase tracking-[0.1em] text-foreground">{group.group_name}</h3>
+                    <p className="text-[9px] font-display uppercase tracking-[0.1em] text-muted-foreground">
+                      {group.memberCount} Members
+                    </p>
                   </div>
-                  <div className="flex gap-1">
+                  <div className="flex gap-1.5">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         navigator.clipboard.writeText(group.invite_code);
                         toast.success('Invite code copied!');
                       }}
-                      className="rounded-lg p-2 hover:bg-muted"
+                      className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-foreground bg-squad-pink"
+                      style={{ boxShadow: '2px 2px 0px 0px hsl(0 0% 8%)' }}
                     >
-                      <Copy className="h-4 w-4 text-muted-foreground" />
+                      <Copy className="h-3.5 w-3.5 text-foreground" strokeWidth={2.5} />
                     </button>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        navigate(`/squads/${group.id}/settings`);
                       }}
-                      className="rounded-lg p-2 hover:bg-muted"
+                      className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-foreground bg-squad-pink"
+                      style={{ boxShadow: '2px 2px 0px 0px hsl(0 0% 8%)' }}
                     >
-                      <Settings className="h-4 w-4 text-muted-foreground" />
+                      <Settings className="h-3.5 w-3.5 text-foreground" strokeWidth={2.5} />
                     </button>
                   </div>
                 </button>

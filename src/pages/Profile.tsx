@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import PageHeader from '@/components/PageHeader';
 import BottomNav from '@/components/BottomNav';
 import { LogOut, Save } from 'lucide-react';
 import { toast } from 'sonner';
+
+const shadow = '4px 4px 0px 0px hsl(0 0% 8%)';
+const shadowSm = '3px 3px 0px 0px hsl(0 0% 8%)';
 
 const Profile = () => {
   const { user, signOut } = useAuth();
@@ -31,37 +33,43 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-background pb-20">
+    <div className="flex min-h-screen flex-col pb-20" style={{ backgroundColor: 'hsl(348 60% 95%)' }}>
       <PageHeader title="Profile" />
 
-      <div className="flex-1 px-4 pt-8 space-y-6">
+      <div className="flex-1 px-5 pt-8 space-y-6">
         <div className="flex flex-col items-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/20 text-2xl font-bold text-primary">
+          <div
+            className="flex h-20 w-20 items-center justify-center rounded-full border-2 border-foreground bg-squad-pink font-display text-2xl font-bold text-foreground"
+            style={{ boxShadow: shadow }}
+          >
             {name?.charAt(0)?.toUpperCase() || '?'}
           </div>
-          <p className="mt-2 text-xs text-muted-foreground">{user?.email}</p>
+          <p className="mt-3 text-[9px] font-display uppercase tracking-[0.2em] text-muted-foreground">{user?.email}</p>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           <div>
-            <label className="mb-1 block text-xs uppercase tracking-wider text-muted-foreground">Name</label>
-            <Input value={name} onChange={(e) => setName(e.target.value)} />
+            <label className="mb-2 block text-[9px] font-display uppercase tracking-[0.2em] font-bold text-foreground">Name</label>
+            <div className="rounded-full" style={{ boxShadow: shadowSm }}>
+              <Input value={name} onChange={(e) => setName(e.target.value)}
+                className="h-11 rounded-full border-2 border-foreground bg-card font-body text-xs px-5" />
+            </div>
           </div>
 
-          <Button onClick={handleSave} disabled={saving} className="w-full bg-primary text-primary-foreground font-display uppercase">
-            <Save className="mr-2 h-4 w-4" />
+          <button onClick={handleSave} disabled={saving}
+            className="flex w-full items-center justify-center gap-2 h-12 rounded-full bg-squad-pink border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground disabled:opacity-50"
+            style={{ boxShadow: shadow }}>
+            <Save className="h-4 w-4" strokeWidth={2.5} />
             {saving ? 'Saving...' : 'Save'}
-          </Button>
+          </button>
         </div>
 
-        <Button
-          onClick={signOut}
-          variant="outline"
-          className="w-full font-display uppercase tracking-wider text-destructive border-destructive"
-        >
-          <LogOut className="mr-2 h-4 w-4" />
+        <button onClick={signOut}
+          className="flex w-full items-center justify-center gap-2 h-12 rounded-full bg-card border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
+          style={{ boxShadow: shadow }}>
+          <LogOut className="h-4 w-4" strokeWidth={2.5} />
           Sign Out
-        </Button>
+        </button>
       </div>
 
       <BottomNav />
