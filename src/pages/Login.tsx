@@ -5,7 +5,7 @@ import { lovable } from '@/integrations/lovable';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { Eye, EyeOff, ArrowLeft, Bell } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft, MoreVertical, Home, Users, Heart, Utensils, User } from 'lucide-react';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -70,48 +70,61 @@ const Login = () => {
     }
   };
 
+  const navItems = [
+    { icon: Home, label: 'Home' },
+    { icon: Users, label: 'Squads' },
+    { icon: Heart, label: 'Wishlist' },
+    { icon: Utensils, label: 'Hangouts' },
+    { icon: User, label: 'Profile' },
+  ];
+
   return (
-    <div className="flex min-h-screen flex-col bg-background">
-      {/* Header matching Figma */}
-      <div className="flex items-center justify-between px-4 py-3">
-        <button className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
-          <ArrowLeft className="h-4 w-4 text-primary-foreground" />
+    <div className="flex min-h-screen flex-col bg-background border-x-2 border-foreground">
+      {/* Header */}
+      <div className="flex items-center justify-between px-4 py-3 border-b border-foreground">
+        <button className="flex h-8 w-8 items-center justify-center rounded-lg bg-squad-pink border border-foreground">
+          <ArrowLeft className="h-4 w-4 text-foreground" />
         </button>
-        <h2 className="font-display text-sm font-bold uppercase tracking-widest">Squad Memory</h2>
-        <button className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
-          <Bell className="h-4 w-4 text-primary-foreground" />
+        <h2 className="font-display text-xs font-bold uppercase tracking-[0.2em] text-foreground">
+          Squad Memory
+        </h2>
+        <button className="flex h-8 w-8 items-center justify-center rounded-lg bg-squad-pink border border-foreground">
+          <MoreVertical className="h-4 w-4 text-foreground" />
         </button>
       </div>
 
-      <div className="flex flex-1 flex-col items-center px-6 pt-8">
+      <div className="flex flex-1 flex-col items-center px-8 pt-10">
         {/* Title */}
-        <h1 className="font-display text-4xl font-bold uppercase tracking-tight">
+        <h1 className="font-display text-3xl font-bold uppercase tracking-tight italic text-foreground">
           Plan Squad
         </h1>
 
+        {/* Divider */}
+        <div className="mt-4 mb-2 w-full max-w-xs border-t border-foreground" />
+
         {/* Subtitle */}
-        <p className="mt-2 text-sm uppercase tracking-wider text-muted-foreground">
-          {isLogin ? 'Welcome Back' : 'Join the Squad'}
+        <p className="text-xs font-display uppercase tracking-[0.2em] font-bold text-foreground">
+          {isLogin ? 'Join the Squad' : 'Join the Squad'}
         </p>
 
         {/* Form */}
-        <form onSubmit={handleEmailAuth} className="mt-8 w-full max-w-sm space-y-4">
+        <form onSubmit={handleEmailAuth} className="mt-8 w-full max-w-xs space-y-5">
           <div>
-            <label className="mb-1 block text-xs uppercase tracking-wider text-muted-foreground">
+            <label className="mb-2 block text-[10px] font-display uppercase tracking-[0.15em] font-bold text-foreground">
               Email Address
             </label>
             <Input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="hello@example.com"
+              placeholder="pixel@plansquad.com"
               required
-              className="rounded-lg border-border bg-card"
+              className="h-11 rounded-full border-2 border-foreground bg-card font-body text-sm px-4"
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-xs uppercase tracking-wider text-muted-foreground">
+            <label className="mb-2 block text-[10px] font-display uppercase tracking-[0.15em] font-bold text-foreground">
               Password
             </label>
             <div className="relative">
@@ -122,70 +135,76 @@ const Login = () => {
                 placeholder="••••••••"
                 required
                 minLength={6}
-                className="rounded-lg border-border bg-card pr-10"
+                className="h-11 rounded-full border-2 border-foreground bg-card pr-10 font-body text-sm px-4"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-foreground"
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
           </div>
 
-          <Button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-lg bg-secondary text-secondary-foreground font-display uppercase tracking-wider"
-          >
-            {loading ? '...' : isLogin ? 'Log In' : 'Sign Up'}
-          </Button>
+          <div className="space-y-3 pt-2">
+            <Button
+              type="submit"
+              disabled={loading}
+              className="w-full h-12 rounded-full bg-squad-pink border-2 border-foreground text-foreground font-display uppercase tracking-[0.15em] font-bold text-sm hover:bg-squad-pink/80"
+            >
+              {loading ? '...' : isLogin ? 'Log In' : 'Sign Up'}
+            </Button>
 
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setIsLogin(!isLogin)}
-            className="w-full rounded-lg font-display uppercase tracking-wider"
-          >
-            {isLogin ? 'Sign Up' : 'Log In'}
-          </Button>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setIsLogin(!isLogin)}
+              className="w-full h-12 rounded-full bg-squad-lavender border-2 border-foreground text-foreground font-display uppercase tracking-[0.15em] font-bold text-sm hover:bg-squad-lavender/80"
+            >
+              {isLogin ? 'Sign Up' : 'Log In'}
+            </Button>
 
-          {/* Google Sign In */}
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleGoogleSignIn}
-            disabled={loading}
-            className="w-full rounded-lg font-display uppercase tracking-wider"
-          >
-            <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
-              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
-              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
-            </svg>
-            Continue with Google
-          </Button>
+            {/* Google Sign In */}
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleGoogleSignIn}
+              disabled={loading}
+              className="w-full h-12 rounded-full border-2 border-foreground bg-card text-foreground font-display uppercase tracking-[0.15em] font-bold text-sm hover:bg-muted"
+            >
+              <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+              </svg>
+              Continue with Google
+            </Button>
+          </div>
 
           {isLogin && (
             <button
               type="button"
               onClick={handleForgotPassword}
-              className="block w-full text-center text-xs uppercase tracking-wider text-muted-foreground"
+              className="block w-full text-center text-[10px] font-display uppercase tracking-[0.15em] font-bold text-foreground pt-1"
             >
-              Forgot Invite Code?
+              Forgot Secret Code?
             </button>
           )}
         </form>
       </div>
 
-      {/* Bottom nav placeholder matching Figma */}
-      <div className="flex items-center justify-around border-t border-border bg-card px-2 py-3">
-        {['Home', 'Squads', 'Wishlist', 'Hangouts', 'Profile'].map((label) => (
-          <div key={label} className="flex flex-col items-center gap-0.5">
-            <div className="h-5 w-5 rounded-full bg-muted" />
-            <span className="text-[10px] font-display uppercase tracking-wider text-muted-foreground">{label}</span>
+      {/* Bottom nav matching Figma */}
+      <div className="flex items-center justify-around border-t-2 border-foreground bg-card px-2 py-3">
+        {navItems.map((item) => (
+          <div key={item.label} className="flex flex-col items-center gap-1">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-squad-pink border border-foreground">
+              <item.icon className="h-3.5 w-3.5 text-foreground" />
+            </div>
+            <span className="text-[8px] font-display uppercase tracking-[0.1em] font-bold text-foreground">
+              {item.label}
+            </span>
           </div>
         ))}
       </div>

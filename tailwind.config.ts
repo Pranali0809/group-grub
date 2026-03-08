@@ -63,6 +63,7 @@ export default {
         },
         squad: {
           pink: "hsl(var(--squad-pink))",
+          lavender: "hsl(var(--squad-lavender))",
           dark: "hsl(var(--squad-dark))",
           gold: "hsl(var(--squad-gold))",
           silver: "hsl(var(--squad-silver))",
