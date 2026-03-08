@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import PageHeader from '@/components/PageHeader';
 import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
 
 const Voting = () => {
   const { sessionId } = useParams<{ sessionId: string }>();
@@ -186,7 +186,20 @@ const Voting = () => {
 
           {/* Info */}
           <div className="p-4">
-            <h3 className="font-display text-xl font-bold text-secondary-foreground uppercase">{current.restaurant_name}</h3>
+            <div className="flex items-center justify-between">
+              <h3 className="font-display text-xl font-bold text-secondary-foreground uppercase">{current.restaurant_name}</h3>
+              {current.link && (
+                <a
+                  href={current.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/20 transition-colors hover:bg-primary/30"
+                >
+                  <ExternalLink className="h-4 w-4 text-primary" />
+                </a>
+              )}
+            </div>
             {current.cuisine_tag && (
               <p className="mt-1 text-sm text-muted-foreground">
                 {[current.cuisine_tag, current.price_range, current.highlight_tag].filter(Boolean).join(' • ')}

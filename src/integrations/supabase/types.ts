@@ -182,6 +182,7 @@ export type Database = {
           custom_tags: string[] | null
           highlight_tag: string | null
           id: string
+          link: string | null
           price_category: string | null
           price_range: string | null
           restaurant_image: string | null
@@ -194,6 +195,7 @@ export type Database = {
           custom_tags?: string[] | null
           highlight_tag?: string | null
           id?: string
+          link?: string | null
           price_category?: string | null
           price_range?: string | null
           restaurant_image?: string | null
@@ -206,6 +208,7 @@ export type Database = {
           custom_tags?: string[] | null
           highlight_tag?: string | null
           id?: string
+          link?: string | null
           price_category?: string | null
           price_range?: string | null
           restaurant_image?: string | null
