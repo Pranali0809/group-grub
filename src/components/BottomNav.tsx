@@ -1,11 +1,11 @@
-import { Home, Users, Utensils, Search, User } from 'lucide-react';
+import { Home, Users, Heart, Utensils, User } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 const navItems = [
   { icon: Home, label: 'Home', path: '/' },
   { icon: Users, label: 'Squads', path: '/squads' },
+  { icon: Heart, label: 'Wishlist', path: '/wishlist' },
   { icon: Utensils, label: 'Hangouts', path: '/hangouts' },
-  { icon: Search, label: 'Discover', path: '/discover' },
   { icon: User, label: 'Profile', path: '/profile' },
 ];
 
