@@ -82,6 +82,7 @@ const SquadDetail = () => {
       price_range: item.price_range,
       highlight_tag: item.highlight_tag,
       custom_tags: item.custom_tags,
+      link: item.google_maps_link,
     }));
 
     await supabase.from('session_restaurants').insert(sessionRestaurants);
