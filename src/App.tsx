@@ -14,7 +14,6 @@ import Results from "./pages/Results";
 import Hangouts from "./pages/Hangouts";
 import Memories from "./pages/Memories";
 import Profile from "./pages/Profile";
-import Discover from "./pages/Discover";
 import JoinGroup from "./pages/JoinGroup";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
@@ -56,7 +55,6 @@ const App = () => (
               <Route path="/hangouts" element={<ProtectedRoute><Hangouts /></ProtectedRoute>} />
               <Route path="/hangouts/:hangoutId/memories" element={<ProtectedRoute><Memories /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-              <Route path="/discover" element={<ProtectedRoute><Discover /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>

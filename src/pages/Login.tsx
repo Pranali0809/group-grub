@@ -5,7 +5,7 @@ import { lovable } from '@/integrations/lovable';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft, Bell } from 'lucide-react';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -72,11 +72,15 @@ const Login = () => {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      {/* Header */}
+      {/* Header matching Figma */}
       <div className="flex items-center justify-between px-4 py-3">
-        <div className="h-8 w-8 rounded-full bg-primary" />
+        <button className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
+          <ArrowLeft className="h-4 w-4 text-primary-foreground" />
+        </button>
         <h2 className="font-display text-sm font-bold uppercase tracking-widest">Squad Memory</h2>
-        <div className="h-8 w-8 rounded-full bg-primary" />
+        <button className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
+          <Bell className="h-4 w-4 text-primary-foreground" />
+        </button>
       </div>
 
       <div className="flex flex-1 flex-col items-center px-6 pt-8">
@@ -176,9 +180,9 @@ const Login = () => {
         </form>
       </div>
 
-      {/* Bottom nav placeholder for visual consistency */}
+      {/* Bottom nav placeholder matching Figma */}
       <div className="flex items-center justify-around border-t border-border bg-card px-2 py-3">
-        {['Home', 'Squads', 'Wishlist', 'Discover', 'Profile'].map((label) => (
+        {['Home', 'Squads', 'Wishlist', 'Hangouts', 'Profile'].map((label) => (
           <div key={label} className="flex flex-col items-center gap-0.5">
             <div className="h-5 w-5 rounded-full bg-muted" />
             <span className="text-[10px] font-display uppercase tracking-wider text-muted-foreground">{label}</span>

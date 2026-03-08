@@ -1,13 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import BottomNav from '@/components/BottomNav';
-import { Users, Heart, Utensils, Search } from 'lucide-react';
+import { Users, Heart, Utensils } from 'lucide-react';
 
 const quickActions = [
   { icon: Users, label: 'My Squads', path: '/squads', color: 'bg-primary/20 text-primary' },
   { icon: Heart, label: 'Wishlist', path: '/wishlist', color: 'bg-squad-gold/20 text-squad-gold' },
   { icon: Utensils, label: 'Hangouts', path: '/hangouts', color: 'bg-squad-success/20 text-squad-success' },
-  { icon: Search, label: 'Explore', path: '/discover', color: 'bg-squad-bronze/20 text-squad-bronze' },
 ];
 
 const Home = () => {
@@ -29,7 +28,7 @@ const Home = () => {
 
       <div className="flex-1 px-4 pt-6 space-y-6">
         {/* Quick Actions */}
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-3 gap-3">
           {quickActions.map((action) => (
             <button
               key={action.path}
