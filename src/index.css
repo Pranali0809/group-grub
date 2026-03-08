@@ -46,7 +46,8 @@
     --sidebar-ring: 348 83% 72%;
 
     /* Custom tokens */
-    --squad-pink: 348 83% 85%;
+    --squad-pink: 348 70% 90%;
+    --squad-pink-deep: 348 83% 78%;
     --squad-lavender: 270 50% 88%;
     --squad-dark: 0 0% 12%;
     --squad-gold: 45 93% 58%;
