@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { lovable } from '@/integrations/lovable';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { Eye, EyeOff, ArrowLeft, MoreVertical, Home, Users, Heart, Utensils, User } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft, MoreVertical } from 'lucide-react';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -69,20 +69,11 @@ const Login = () => {
     }
   };
 
-  const navItems = [
-    { icon: Home, label: 'Home', path: '/' },
-    { icon: Users, label: 'Squads', path: '/squads' },
-    { icon: Heart, label: 'Wishlist', path: '/wishlist' },
-    { icon: Utensils, label: 'Hangouts', path: '/hangouts' },
-    { icon: User, label: 'Profile', path: '/profile' },
-  ];
-
-  // Retro solid box-shadow style
   const shadowSm = '3px 3px 0px 0px hsl(0 0% 8%)';
   const shadowMd = '4px 4px 0px 0px hsl(0 0% 8%)';
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-squad-pink">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3">
         <button
@@ -207,26 +198,6 @@ const Login = () => {
         </form>
       </div>
 
-      {/* Bottom nav - clickable */}
-      <div className="flex items-center justify-around border-t-2 border-foreground bg-card px-2 py-3">
-        {navItems.map((item) => (
-          <button
-            key={item.label}
-            onClick={() => navigate(item.path)}
-            className="flex flex-col items-center gap-1"
-          >
-            <div
-              className="flex h-8 w-8 items-center justify-center rounded-xl bg-squad-pink border-2 border-foreground"
-              style={{ boxShadow: '2px 2px 0px 0px hsl(0 0% 8%)' }}
-            >
-              <item.icon className="h-3.5 w-3.5 text-foreground" strokeWidth={2.5} />
-            </div>
-            <span className="text-[7px] font-display uppercase tracking-[0.15em] font-bold text-foreground">
-              {item.label}
-            </span>
-          </button>
-        ))}
-      </div>
     </div>
   );
 };
