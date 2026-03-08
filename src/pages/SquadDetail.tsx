@@ -22,11 +22,29 @@ const SquadDetail = () => {
       const { data: groupData } = await supabase.from('groups').select('*').eq('id', id).single();
       setGroup(groupData);
 
+      // Fetch members first
       const { data: membersData } = await supabase
         .from('group_members')
-        .select('*, profiles:user_id(name, profile_image, email)')
+        .select('*')
         .eq('group_id', id);
-      setMembers(membersData || []);
+      
+      // Then fetch profiles for those members
+      if (membersData && membersData.length > 0) {
+        const userIds = membersData.map(m => m.user_id);
+        const { data: profilesData } = await supabase
+          .from('profiles')
+          .select('user_id, name, profile_image, email')
+          .in('user_id', userIds);
+        
+        // Combine members with profiles
+        const membersWithProfiles = membersData.map(member => ({
+          ...member,
+          profiles: profilesData?.find(p => p.user_id === member.user_id) || null
+        }));
+        setMembers(membersWithProfiles);
+      } else {
+        setMembers([]);
+      }
 
       const { data: sessions } = await supabase
         .from('sessions')
