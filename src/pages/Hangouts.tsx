@@ -32,9 +32,22 @@ const Hangouts = () => {
       const groupIds = memberships.map(m => m.group_id);
       const { data } = await supabase
         .from('hangouts')
-        .select('*, profiles:created_by_user_id(name)')
+        .select('*')
         .in('group_id', groupIds)
         .order('scheduled_date', { ascending: true });
+      
+      // Fetch profiles for creators
+      const creatorIds = [...new Set((data || []).map(h => h.created_by_user_id))];
+      const { data: profiles } = await supabase
+        .from('profiles')
+        .select('user_id, name')
+        .in('user_id', creatorIds);
+      
+      // Combine data
+      const hangoutsWithProfiles = (data || []).map(h => ({
+        ...h,
+        profiles: profiles?.find(p => p.user_id === h.created_by_user_id) || null
+      }));
 
       // Auto-complete past hangouts
       const now = new Date();
