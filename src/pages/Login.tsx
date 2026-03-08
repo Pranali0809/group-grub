@@ -82,7 +82,7 @@ const Login = () => {
   const shadowMd = '4px 4px 0px 0px hsl(0 0% 8%)';
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-squad-pink">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3">
         <button
