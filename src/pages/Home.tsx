@@ -1,12 +1,15 @@
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import BottomNav from '@/components/BottomNav';
-import { Users, Heart, Utensils } from 'lucide-react';
+import PageHeader from '@/components/PageHeader';
+import { Users, Heart, Utensils, Sparkles } from 'lucide-react';
+
+const shadow = '4px 4px 0px 0px hsl(0 0% 8%)';
 
 const quickActions = [
-  { icon: Users, label: 'My Squads', path: '/squads', color: 'bg-primary/20 text-primary' },
-  { icon: Heart, label: 'Wishlist', path: '/wishlist', color: 'bg-squad-gold/20 text-squad-gold' },
-  { icon: Utensils, label: 'Hangouts', path: '/hangouts', color: 'bg-squad-success/20 text-squad-success' },
+  { icon: Users, label: 'My Squads', path: '/squads', bg: 'bg-squad-pink' },
+  { icon: Heart, label: 'Wishlist', path: '/wishlist', bg: 'bg-squad-lavender' },
+  { icon: Utensils, label: 'Hangouts', path: '/hangouts', bg: 'bg-squad-pink' },
 ];
 
 const Home = () => {
@@ -14,41 +17,47 @@ const Home = () => {
   const { user } = useAuth();
 
   return (
-    <div className="flex min-h-screen flex-col bg-background pb-20">
-      {/* Header */}
-      <div className="flex items-center justify-between bg-primary px-4 py-4">
-        <div>
-          <h1 className="font-display text-xl font-bold text-primary-foreground uppercase tracking-wider">Squad Memory</h1>
-          <p className="text-xs text-primary-foreground/80">Where squads decide what to eat</p>
-        </div>
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-foreground/20 text-sm font-bold text-primary-foreground">
-          {user?.email?.charAt(0)?.toUpperCase() || '?'}
-        </div>
-      </div>
+    <div className="flex min-h-screen flex-col pb-20" style={{ backgroundColor: 'hsl(348 60% 95%)' }}>
+      <PageHeader
+        title="Squad Memory"
+        leftIcon={<Sparkles className="h-4 w-4 text-foreground" strokeWidth={2.5} />}
+      />
 
-      <div className="flex-1 px-4 pt-6 space-y-6">
+      <div className="flex-1 px-5 pt-6 space-y-5">
+        {/* Welcome */}
+        <div
+          className="rounded-2xl border-2 border-foreground bg-card p-6 text-center"
+          style={{ boxShadow: shadow }}
+        >
+          <h2 className="font-display text-2xl font-bold uppercase italic text-foreground leading-none">
+            Ready to Plan?
+          </h2>
+          <div className="mt-3 mb-2 mx-auto w-32 border-t-2 border-foreground" />
+          <p className="text-[10px] font-display uppercase tracking-[0.2em] font-bold text-foreground">
+            Where squads decide what to eat
+          </p>
+        </div>
+
         {/* Quick Actions */}
-        <div className="grid grid-cols-3 gap-3">
+        <div className="space-y-3">
           {quickActions.map((action) => (
             <button
               key={action.path}
               onClick={() => navigate(action.path)}
-              className="flex flex-col items-center gap-2 rounded-xl bg-card p-5 transition-transform active:scale-95"
+              className={`flex w-full items-center gap-4 rounded-2xl border-2 border-foreground ${action.bg} p-4 text-left transition-transform active:scale-[0.98]`}
+              style={{ boxShadow: shadow }}
             >
-              <div className={`flex h-12 w-12 items-center justify-center rounded-full ${action.color}`}>
-                <action.icon className="h-6 w-6" />
+              <div
+                className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-foreground bg-card"
+                style={{ boxShadow: '2px 2px 0px 0px hsl(0 0% 8%)' }}
+              >
+                <action.icon className="h-5 w-5 text-foreground" strokeWidth={2.5} />
               </div>
-              <span className="font-display text-xs font-bold uppercase tracking-wider">{action.label}</span>
+              <span className="font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground">
+                {action.label}
+              </span>
             </button>
           ))}
-        </div>
-
-        {/* Welcome Message */}
-        <div className="rounded-xl bg-card p-4 text-center">
-          <h2 className="font-display text-lg font-bold uppercase">Ready to Plan?</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Create a squad, add restaurants to your wishlist, and vote on where to eat next!
-          </p>
         </div>
       </div>
 
