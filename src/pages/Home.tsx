@@ -18,44 +18,25 @@ const Home = () => {
 
   return (
     <div className="flex min-h-screen flex-col pb-20" style={{ backgroundColor: 'hsl(348 60% 95%)' }}>
-      <PageHeader
-        title="Squad Memory"
-        leftIcon={<Sparkles className="h-4 w-4 text-foreground" strokeWidth={2.5} />}
-      />
+      <PageHeader title="Squad Memory" leftIcon={<Sparkles className="h-5 w-5 text-foreground" strokeWidth={2.5} />} />
 
       <div className="flex-1 px-5 pt-6 space-y-5">
-        {/* Welcome */}
-        <div
-          className="rounded-2xl border-2 border-foreground bg-card p-6 text-center"
-          style={{ boxShadow: shadow }}
-        >
-          <h2 className="font-display text-2xl font-bold uppercase italic text-foreground leading-none">
-            Ready to Plan?
-          </h2>
-          <div className="mt-3 mb-2 mx-auto w-32 border-t-2 border-foreground" />
-          <p className="text-[10px] font-display uppercase tracking-[0.2em] font-bold text-foreground">
-            Where squads decide what to eat
-          </p>
+        <div className="rounded-2xl border-2 border-foreground bg-card p-6 text-center" style={{ boxShadow: shadow }}>
+          <h2 className="font-display text-3xl font-bold uppercase italic text-foreground leading-none">Ready to Plan?</h2>
+          <div className="mt-3 mb-2 mx-auto w-36 border-t-2 border-foreground" />
+          <p className="text-xs font-display uppercase tracking-[0.15em] font-bold text-foreground">Where squads decide what to eat</p>
         </div>
 
-        {/* Quick Actions */}
         <div className="space-y-3">
           {quickActions.map((action) => (
-            <button
-              key={action.path}
-              onClick={() => navigate(action.path)}
-              className={`flex w-full items-center gap-4 rounded-2xl border-2 border-foreground ${action.bg} p-4 text-left transition-transform active:scale-[0.98]`}
-              style={{ boxShadow: shadow }}
-            >
-              <div
-                className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-foreground bg-card"
-                style={{ boxShadow: '2px 2px 0px 0px hsl(0 0% 8%)' }}
-              >
+            <button key={action.path} onClick={() => navigate(action.path)}
+              className={`flex w-full items-center gap-4 rounded-2xl border-2 border-foreground ${action.bg} p-4 text-left active:scale-[0.98] transition-transform`}
+              style={{ boxShadow: shadow }}>
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl border-2 border-foreground bg-card"
+                style={{ boxShadow: '2px 2px 0px 0px hsl(0 0% 8%)' }}>
                 <action.icon className="h-5 w-5 text-foreground" strokeWidth={2.5} />
               </div>
-              <span className="font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground">
-                {action.label}
-              </span>
+              <span className="font-display text-sm font-bold uppercase tracking-[0.15em] text-foreground">{action.label}</span>
             </button>
           ))}
         </div>
