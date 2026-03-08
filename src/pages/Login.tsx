@@ -4,7 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { lovable } from '@/integrations/lovable';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
-import { Eye, EyeOff, ArrowLeft, MoreVertical, Home, Users, Heart, Utensils, User } from 'lucide-react';
+import { Eye, EyeOff, ArrowLeft, MoreVertical } from 'lucide-react';
 
 const Login = () => {
   const navigate = useNavigate();
