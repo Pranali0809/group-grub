@@ -20,30 +20,30 @@ const PageHeader = ({ title, showBack = false, rightIcon, onRightClick, leftIcon
       {showBack ? (
         <button
           onClick={() => navigate(-1)}
-          className="flex h-9 w-9 items-center justify-center rounded-xl bg-squad-pink-deep border-2 border-foreground"
+          className="flex h-10 w-10 items-center justify-center rounded-xl bg-squad-pink-deep border-2 border-foreground"
           style={{ boxShadow: shadow }}
         >
-          <ArrowLeft className="h-4 w-4 text-foreground" strokeWidth={2.5} />
+          <ArrowLeft className="h-5 w-5 text-foreground" strokeWidth={2.5} />
         </button>
       ) : leftIcon ? (
         <div
-          className="flex h-9 w-9 items-center justify-center rounded-xl bg-squad-pink-deep border-2 border-foreground"
+          className="flex h-10 w-10 items-center justify-center rounded-xl bg-squad-pink-deep border-2 border-foreground"
           style={{ boxShadow: shadow }}
         >
           {leftIcon}
         </div>
       ) : (
-        <div className="w-9" />
+        <div className="w-10" />
       )}
 
-      <h1 className="font-display text-[11px] font-bold uppercase tracking-[0.25em] text-foreground">
+      <h1 className="font-display text-sm font-bold uppercase tracking-[0.2em] text-foreground">
         {title}
       </h1>
 
       {rightIcon ? (
         <button
           onClick={onRightClick}
-          className="flex h-9 w-9 items-center justify-center rounded-xl bg-squad-pink-deep border-2 border-foreground"
+          className="flex h-10 w-10 items-center justify-center rounded-xl bg-squad-pink-deep border-2 border-foreground"
           style={{ boxShadow: shadow }}
         >
           {rightIcon}
@@ -51,10 +51,10 @@ const PageHeader = ({ title, showBack = false, rightIcon, onRightClick, leftIcon
       ) : (
         <button
           onClick={onRightClick}
-          className="flex h-9 w-9 items-center justify-center rounded-xl bg-squad-pink-deep border-2 border-foreground"
+          className="flex h-10 w-10 items-center justify-center rounded-xl bg-squad-pink-deep border-2 border-foreground"
           style={{ boxShadow: shadow }}
         >
-          <MoreVertical className="h-4 w-4 text-foreground" strokeWidth={2.5} />
+          <MoreVertical className="h-5 w-5 text-foreground" strokeWidth={2.5} />
         </button>
       )}
     </header>

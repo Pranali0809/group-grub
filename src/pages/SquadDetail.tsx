@@ -27,10 +27,7 @@ const SquadDetail = () => {
       if (membersData && membersData.length > 0) {
         const userIds = membersData.map(m => m.user_id);
         const { data: profilesData } = await supabase.from('profiles').select('user_id, name, profile_image, email').in('user_id', userIds);
-        const membersWithProfiles = membersData.map(member => ({
-          ...member, profiles: profilesData?.find(p => p.user_id === member.user_id) || null
-        }));
-        setMembers(membersWithProfiles);
+        setMembers(membersData.map(member => ({ ...member, profiles: profilesData?.find(p => p.user_id === member.user_id) || null })));
       } else { setMembers([]); }
       const { data: sessions } = await supabase.from('sessions').select('*').eq('group_id', id).eq('status', 'active');
       setActiveSessions(sessions || []);
@@ -44,87 +41,73 @@ const SquadDetail = () => {
     const { data: allItems } = await supabase.from('wishlist_items').select('*').in('user_id', memberIds);
     if (!allItems || allItems.length === 0) { toast.error('No restaurants in any member wishlist!'); return; }
     const seen = new Set<string>();
-    const uniqueItems = allItems.filter(item => {
-      const key = item.restaurant_name.toLowerCase();
-      if (seen.has(key)) return false; seen.add(key); return true;
-    });
+    const uniqueItems = allItems.filter(item => { const key = item.restaurant_name.toLowerCase(); if (seen.has(key)) return false; seen.add(key); return true; });
     const { data: session, error } = await supabase.from('sessions').insert({ group_id: id, started_by_user_id: user.id }).select().single();
     if (error) { toast.error(error.message); return; }
-    const sessionRestaurants = uniqueItems.map(item => ({
+    await supabase.from('session_restaurants').insert(uniqueItems.map(item => ({
       session_id: session.id, wishlist_item_id: item.id, restaurant_name: item.restaurant_name,
       restaurant_image: item.restaurant_image, cuisine_tag: item.cuisine_tag, price_category: item.price_category,
       price_range: item.price_range, highlight_tag: item.highlight_tag, custom_tags: item.custom_tags, link: item.google_maps_link,
-    }));
-    await supabase.from('session_restaurants').insert(sessionRestaurants);
-    toast.success('Voting session started!');
-    navigate(`/voting/${session.id}`);
+    })));
+    toast.success('Voting session started!'); navigate(`/voting/${session.id}`);
   };
 
-  if (!group) return <div className="flex min-h-screen items-center justify-center font-display text-xs uppercase">Loading...</div>;
+  if (!group) return <div className="flex min-h-screen items-center justify-center font-display text-sm uppercase">Loading...</div>;
 
   return (
     <div className="flex min-h-screen flex-col pb-20" style={{ backgroundColor: 'hsl(348 60% 95%)' }}>
       <PageHeader title={group.group_name} showBack />
-
       <div className="flex-1 px-5 pt-4 space-y-4">
-        {/* Invite Code */}
         <div className="flex items-center justify-between rounded-2xl border-2 border-foreground bg-card p-4" style={{ boxShadow: shadowSm }}>
           <div>
-            <p className="text-[9px] font-display uppercase tracking-[0.2em] font-bold text-muted-foreground">Invite Code</p>
-            <p className="font-display text-lg font-bold tracking-[0.15em] text-foreground">{group.invite_code}</p>
+            <p className="text-[11px] font-display uppercase tracking-[0.15em] font-bold text-muted-foreground">Invite Code</p>
+            <p className="font-display text-xl font-bold tracking-[0.12em] text-foreground">{group.invite_code}</p>
           </div>
           <button onClick={() => { navigator.clipboard.writeText(group.invite_code); toast.success('Copied!'); }}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border-2 border-foreground bg-squad-pink"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-foreground bg-squad-pink"
             style={{ boxShadow: '2px 2px 0px 0px hsl(0 0% 8%)' }}>
-            <Copy className="h-4 w-4 text-foreground" strokeWidth={2.5} />
+            <Copy className="h-5 w-5 text-foreground" strokeWidth={2.5} />
           </button>
         </div>
 
-        {/* Members */}
         <div>
-          <h2 className="mb-2 text-[9px] font-display uppercase tracking-[0.2em] font-bold text-foreground">
-            Members ({members.length})
-          </h2>
+          <h2 className="mb-2 text-[11px] font-display uppercase tracking-[0.15em] font-bold text-foreground">Members ({members.length})</h2>
           <div className="space-y-2">
             {members.map((member) => (
               <div key={member.id} className="flex items-center gap-3 rounded-2xl border-2 border-foreground bg-card p-3" style={{ boxShadow: shadowSm }}>
-                <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-foreground bg-squad-pink font-display text-[10px] font-bold text-foreground">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-foreground bg-squad-pink font-display text-xs font-bold text-foreground">
                   {(member.profiles as any)?.name?.charAt(0)?.toUpperCase() || '?'}
                 </div>
                 <div>
-                  <p className="font-display text-[11px] font-bold uppercase text-foreground">{(member.profiles as any)?.name || 'Unknown'}</p>
-                  <p className="text-[9px] text-muted-foreground">{(member.profiles as any)?.email}</p>
+                  <p className="font-display text-sm font-bold uppercase text-foreground">{(member.profiles as any)?.name || 'Unknown'}</p>
+                  <p className="text-[11px] text-muted-foreground">{(member.profiles as any)?.email}</p>
                 </div>
                 {member.user_id === group.admin_user_id && (
-                  <span className="ml-auto rounded-full bg-squad-pink border border-foreground px-2 py-0.5 text-[8px] font-display uppercase font-bold text-foreground">Admin</span>
+                  <span className="ml-auto rounded-full bg-squad-pink border border-foreground px-2.5 py-1 text-[10px] font-display uppercase font-bold text-foreground">Admin</span>
                 )}
               </div>
             ))}
           </div>
         </div>
 
-        {/* Active Sessions */}
         {activeSessions.length > 0 && (
           <div>
-            <h2 className="mb-2 text-[9px] font-display uppercase tracking-[0.2em] font-bold text-foreground">Active Sessions</h2>
+            <h2 className="mb-2 text-[11px] font-display uppercase tracking-[0.15em] font-bold text-foreground">Active Sessions</h2>
             {activeSessions.map(session => (
               <button key={session.id} onClick={() => navigate(`/voting/${session.id}`)}
-                className="w-full rounded-2xl border-2 border-foreground bg-squad-pink p-3 text-left" style={{ boxShadow: shadowSm }}>
-                <p className="font-display text-[11px] font-bold uppercase tracking-[0.15em] text-foreground">Join Voting Session →</p>
+                className="w-full rounded-2xl border-2 border-foreground bg-squad-pink p-4 text-left" style={{ boxShadow: shadowSm }}>
+                <p className="font-display text-sm font-bold uppercase tracking-[0.1em] text-foreground">Join Voting Session →</p>
               </button>
             ))}
           </div>
         )}
 
-        {/* Start Session */}
         <button onClick={startSession}
-          className="flex w-full items-center justify-center gap-2 h-12 rounded-full bg-squad-pink border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
+          className="flex w-full items-center justify-center gap-2 h-14 rounded-full bg-squad-pink border-2 border-foreground font-display text-sm font-bold uppercase tracking-[0.15em] text-foreground"
           style={{ boxShadow: shadow }}>
-          <Play className="h-4 w-4" strokeWidth={2.5} />
-          Start Voting Session
+          <Play className="h-5 w-5" strokeWidth={2.5} /> Start Voting Session
         </button>
       </div>
-
       <BottomNav />
     </div>
   );
