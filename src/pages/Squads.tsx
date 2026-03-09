@@ -77,7 +77,7 @@ const Squads = () => {
                 className="h-10 rounded-full border-2 border-foreground bg-card font-body text-xs px-4" />
             </div>
             <button onClick={handleCreateGroup}
-              className="w-full h-10 rounded-full bg-squad-pink border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
+              className="w-full h-10 rounded-full bg-squad-mint border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
               style={{ boxShadow: shadow }}>Create</button>
           </DialogContent>
         </Dialog>
@@ -94,7 +94,7 @@ const Squads = () => {
                 className="h-10 rounded-full border-2 border-foreground bg-card font-body text-xs px-4" />
             </div>
             <button onClick={handleJoinGroup}
-              className="w-full h-10 rounded-full bg-squad-pink border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
+              className="w-full h-10 rounded-full bg-squad-yellow border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
               style={{ boxShadow: shadow }}>Join</button>
           </DialogContent>
         </Dialog>
@@ -107,31 +107,34 @@ const Squads = () => {
             <div className="py-8 text-center text-muted-foreground font-display text-[10px] uppercase tracking-[0.15em]">No squads yet</div>
           ) : (
             <div className="space-y-2.5">
-              {groups.map((group) => (
-                <button key={group.id} onClick={() => navigate(`/squads/${group.id}`)}
-                  className="flex w-full items-center gap-3 rounded-2xl border-2 border-foreground bg-card p-3 text-left" style={{ boxShadow: shadowSm }}>
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-foreground bg-squad-lavender"
-                    style={{ boxShadow: shadowSm }}>
-                    <Users className="h-4 w-4 text-foreground" strokeWidth={2.5} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-display text-[11px] font-bold uppercase tracking-[0.1em] text-foreground">{group.group_name}</h3>
-                    <p className="text-[9px] font-display uppercase tracking-[0.1em] text-muted-foreground">{group.memberCount} Members</p>
-                  </div>
-                  <div className="flex gap-1.5">
-                    <button onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(group.invite_code); toast.success('Invite code copied!'); }}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-foreground bg-squad-pink"
+              {groups.map((group, idx) => {
+                const colors = ['bg-squad-lavender', 'bg-squad-mint', 'bg-squad-yellow', 'bg-squad-peach', 'bg-squad-pink'];
+                return (
+                  <button key={group.id} onClick={() => navigate(`/squads/${group.id}`)}
+                    className="flex w-full items-center gap-3 rounded-2xl border-2 border-foreground bg-card p-3 text-left" style={{ boxShadow: shadowSm }}>
+                    <div className={`flex h-10 w-10 items-center justify-center rounded-full border-2 border-foreground ${colors[idx % colors.length]}`}
                       style={{ boxShadow: shadowSm }}>
-                      <Copy className="h-3.5 w-3.5 text-foreground" strokeWidth={2.5} />
-                    </button>
-                    <button onClick={(e) => e.stopPropagation()}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-foreground bg-squad-pink"
-                      style={{ boxShadow: shadowSm }}>
-                      <Settings className="h-3.5 w-3.5 text-foreground" strokeWidth={2.5} />
-                    </button>
-                  </div>
-                </button>
-              ))}
+                      <Users className="h-4 w-4 text-foreground" strokeWidth={2.5} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-display text-[11px] font-bold uppercase tracking-[0.1em] text-foreground">{group.group_name}</h3>
+                      <p className="text-[9px] font-display uppercase tracking-[0.1em] text-muted-foreground">{group.memberCount} Members</p>
+                    </div>
+                    <div className="flex gap-1.5">
+                      <button onClick={(e) => { e.stopPropagation(); navigator.clipboard.writeText(group.invite_code); toast.success('Invite code copied!'); }}
+                        className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-foreground bg-squad-yellow"
+                        style={{ boxShadow: shadowSm }}>
+                        <Copy className="h-3.5 w-3.5 text-foreground" strokeWidth={2.5} />
+                      </button>
+                      <button onClick={(e) => e.stopPropagation()}
+                        className="flex h-8 w-8 items-center justify-center rounded-lg border-2 border-foreground bg-squad-mint"
+                        style={{ boxShadow: shadowSm }}>
+                        <Settings className="h-3.5 w-3.5 text-foreground" strokeWidth={2.5} />
+                      </button>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           )}
         </div>

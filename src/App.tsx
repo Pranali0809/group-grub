@@ -12,6 +12,7 @@ import Wishlist from "./pages/Wishlist";
 import Voting from "./pages/Voting";
 import Results from "./pages/Results";
 import Hangouts from "./pages/Hangouts";
+import EditHangout from "./pages/EditHangout";
 import Memories from "./pages/Memories";
 import Profile from "./pages/Profile";
 import JoinGroup from "./pages/JoinGroup";
@@ -53,6 +54,7 @@ const App = () => (
               <Route path="/voting/:sessionId" element={<ProtectedRoute><Voting /></ProtectedRoute>} />
               <Route path="/results/:sessionId" element={<ProtectedRoute><Results /></ProtectedRoute>} />
               <Route path="/hangouts" element={<ProtectedRoute><Hangouts /></ProtectedRoute>} />
+              <Route path="/hangouts/:hangoutId/edit" element={<ProtectedRoute><EditHangout /></ProtectedRoute>} />
               <Route path="/hangouts/:hangoutId/memories" element={<ProtectedRoute><Memories /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
