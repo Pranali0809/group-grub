@@ -12,6 +12,7 @@ import Wishlist from "./pages/Wishlist";
 import Voting from "./pages/Voting";
 import Results from "./pages/Results";
 import Hangouts from "./pages/Hangouts";
+import EditHangout from "./pages/EditHangout";
 import Memories from "./pages/Memories";
 import Profile from "./pages/Profile";
 import JoinGroup from "./pages/JoinGroup";
