@@ -54,6 +54,7 @@ const App = () => (
               <Route path="/voting/:sessionId" element={<ProtectedRoute><Voting /></ProtectedRoute>} />
               <Route path="/results/:sessionId" element={<ProtectedRoute><Results /></ProtectedRoute>} />
               <Route path="/hangouts" element={<ProtectedRoute><Hangouts /></ProtectedRoute>} />
+              <Route path="/hangouts/:hangoutId/edit" element={<ProtectedRoute><EditHangout /></ProtectedRoute>} />
               <Route path="/hangouts/:hangoutId/memories" element={<ProtectedRoute><Memories /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="*" element={<NotFound />} />
