@@ -8,8 +8,8 @@ const shadow = '3px 3px 0px 0px hsl(0 0% 8%)';
 
 const quickActions = [
   { icon: Users, label: 'My Squads', path: '/squads', bg: 'bg-squad-pink' },
-  { icon: Heart, label: 'Wishlist', path: '/wishlist', bg: 'bg-squad-lavender' },
-  { icon: Utensils, label: 'Hangouts', path: '/hangouts', bg: 'bg-squad-pink' },
+  { icon: Heart, label: 'Wishlist', path: '/wishlist', bg: 'bg-squad-yellow' },
+  { icon: Utensils, label: 'Hangouts', path: '/hangouts', bg: 'bg-squad-mint' },
 ];
 
 const Home = () => {

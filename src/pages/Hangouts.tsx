@@ -51,11 +51,11 @@ const Hangouts = () => {
       <div className="flex gap-2 px-4 pt-2">
         <button onClick={() => setTab('upcoming')}
           className={`rounded-full px-4 py-2 font-display text-[9px] uppercase tracking-[0.2em] font-bold border-2 border-foreground ${
-            tab === 'upcoming' ? 'bg-squad-pink-deep' : 'bg-card'
+            tab === 'upcoming' ? 'bg-squad-mint' : 'bg-card'
           } text-foreground`} style={{ boxShadow: shadowSm }}>Upcoming</button>
         <button onClick={() => setTab('history')}
           className={`rounded-full px-4 py-2 font-display text-[9px] uppercase tracking-[0.2em] font-bold border-2 border-foreground ${
-            tab === 'history' ? 'bg-squad-pink-deep' : 'bg-card'
+            tab === 'history' ? 'bg-squad-peach' : 'bg-card'
           } text-foreground`} style={{ boxShadow: shadowSm }}>History</button>
       </div>
 
@@ -75,14 +75,14 @@ const Hangouts = () => {
           displayed.map((hangout) => (
             <div key={hangout.id} className="overflow-hidden rounded-2xl border-2 border-foreground bg-card" style={{ boxShadow: shadowSm }}>
               {hangout.restaurant_image ? (
-                <img src={hangout.restaurant_image} alt={hangout.restaurant_name} className="h-28 w-full object-cover" />
+                <img src={hangout.restaurant_image} alt={hangout.restaurant_name} className="h-32 w-full object-cover" />
               ) : (
-                <div className="flex h-28 w-full items-center justify-center bg-muted"><span className="text-3xl">🍽️</span></div>
+                <div className="flex h-32 w-full items-center justify-center bg-muted"><span className="text-3xl">🍽️</span></div>
               )}
               <div className="border-t-2 border-foreground p-2.5">
                 <div className="flex items-start justify-between">
                   <div>
-                    <h3 className="font-display text-[11px] font-bold uppercase tracking-[0.08em] text-foreground">{hangout.restaurant_name}</h3>
+                    <h3 className="font-display text-sm font-bold uppercase tracking-[0.08em] text-foreground">{hangout.restaurant_name}</h3>
                     <p className="mt-0.5 flex items-center gap-1 text-[9px] font-display uppercase tracking-[0.08em] text-muted-foreground">
                       <Calendar className="h-3 w-3" />
                       {format(parseISO(hangout.scheduled_date), 'MMM d, yyyy')} • {hangout.scheduled_time}
@@ -98,17 +98,17 @@ const Hangouts = () => {
                 <div className="mt-2 flex gap-1.5">
                   {hangout.status === 'upcoming' && (
                     <>
-                      <button className="flex items-center gap-1 rounded-full border-2 border-foreground bg-squad-pink px-3 py-1.5 text-[9px] font-display uppercase font-bold text-foreground"
+                      <button className="flex items-center gap-1 rounded-full border-2 border-foreground bg-squad-mint px-3 py-1.5 text-[9px] font-display uppercase font-bold text-foreground"
                         style={{ boxShadow: shadowSm }}><Users className="h-3 w-3" /> People</button>
                       <button onClick={() => navigate(`/hangouts/${hangout.id}/edit`)}
-                        className="flex items-center gap-1 rounded-full border-2 border-foreground bg-squad-lavender px-3 py-1.5 text-[9px] font-display uppercase font-bold text-foreground"
+                        className="flex items-center gap-1 rounded-full border-2 border-foreground bg-squad-yellow px-3 py-1.5 text-[9px] font-display uppercase font-bold text-foreground"
                         style={{ boxShadow: shadowSm }}><Edit className="h-3 w-3" /> Edit</button>
                     </>
                   )}
                   {hangout.status === 'completed' && (
                     <>
                       <button onClick={() => navigate(`/hangouts/${hangout.id}/memories`)}
-                        className="flex items-center gap-1 rounded-full border-2 border-foreground bg-squad-pink px-3 py-1.5 text-[9px] font-display uppercase font-bold text-foreground"
+                        className="flex items-center gap-1 rounded-full border-2 border-foreground bg-squad-mint px-3 py-1.5 text-[9px] font-display uppercase font-bold text-foreground"
                         style={{ boxShadow: shadowSm }}><ImagePlus className="h-3 w-3" /> Add Memory</button>
                       <button onClick={() => navigate(`/hangouts/${hangout.id}/memories`)}
                         className="flex items-center gap-1 rounded-full border-2 border-foreground bg-squad-lavender px-3 py-1.5 text-[9px] font-display uppercase font-bold text-foreground"

@@ -16,6 +16,8 @@ type ResultItem = {
   cuisine_tag: string | null; price_range: string | null; highlight_tag: string | null; accept_count: number;
 };
 
+const rankColors = ['bg-squad-yellow', 'bg-squad-mint', 'bg-squad-peach', 'bg-squad-lavender', 'bg-squad-pink'];
+
 const Results = () => {
   const { sessionId } = useParams<{ sessionId: string }>();
   const { user } = useAuth();
@@ -85,7 +87,7 @@ const Results = () => {
             </div>
             <p className="text-[9px] font-display uppercase tracking-[0.15em] text-muted-foreground">{winner.accept_count} Accept Votes</p>
             <button onClick={() => { setSelectedRestaurant(winner); setHangoutOpen(true); }}
-              className="mt-3 flex w-full items-center justify-center gap-2 h-10 rounded-full bg-squad-lavender border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
+              className="mt-3 flex w-full items-center justify-center gap-2 h-10 rounded-full bg-squad-mint border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
               style={{ boxShadow: shadowSm }}>
               <CalendarDays className="h-4 w-4" strokeWidth={2.5} /> Plan Hangout
             </button>
@@ -95,7 +97,7 @@ const Results = () => {
         <div className="space-y-2">
           {results.map((item, index) => (
             <div key={item.wishlist_item_id} className="flex items-center gap-2.5 rounded-2xl border-2 border-foreground bg-card p-2.5" style={{ boxShadow: shadowSm }}>
-              <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-foreground bg-squad-pink text-sm">
+              <div className={`flex h-8 w-8 items-center justify-center rounded-full border-2 border-foreground ${rankColors[index % rankColors.length]} text-sm`}>
                 {index < 3 ? medals[index] : <span className="font-display text-[10px] font-bold">{index + 1}</span>}
               </div>
               {item.restaurant_image && <img src={item.restaurant_image} alt="" className="h-10 w-10 rounded-lg border-2 border-foreground object-cover" />}
@@ -129,7 +131,7 @@ const Results = () => {
             <Input type="time" value={hangoutTime} onChange={(e) => setHangoutTime(e.target.value)} className="h-10 rounded-full border-2 border-foreground bg-card font-body text-xs px-4" />
           </div>
           <button onClick={handleCreateHangout}
-            className="w-full h-10 rounded-full bg-squad-pink border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
+            className="w-full h-10 rounded-full bg-squad-yellow border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
             style={{ boxShadow: shadow }}>Create Hangout</button>
         </DialogContent>
       </Dialog>

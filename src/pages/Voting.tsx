@@ -8,6 +8,8 @@ import { ArrowLeft, ArrowRight, ExternalLink } from 'lucide-react';
 
 const shadow = '3px 3px 0px 0px hsl(0 0% 8%)';
 
+const tagColors = ['bg-squad-mint', 'bg-squad-yellow', 'bg-squad-peach'];
+
 const Voting = () => {
   const { sessionId } = useParams<{ sessionId: string }>();
   const { user } = useAuth();
@@ -65,7 +67,7 @@ const Voting = () => {
         <h2 className="font-display text-xl font-bold uppercase italic text-foreground">Voting Complete!</h2>
         <p className="mt-2 text-[9px] font-display uppercase tracking-[0.2em] text-muted-foreground">Waiting for other members...</p>
         <button onClick={() => navigate(`/results/${sessionId}`)}
-          className="mt-5 rounded-full bg-squad-pink border-2 border-foreground px-6 py-3 font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
+          className="mt-5 rounded-full bg-squad-mint border-2 border-foreground px-6 py-3 font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
           style={{ boxShadow: shadow }}>View Results</button>
       </div>
     );
@@ -79,13 +81,11 @@ const Voting = () => {
     <div className="flex min-h-screen flex-col" style={{ backgroundColor: 'hsl(348 60% 95%)' }}>
       <PageHeader title="Squad Voting" showBack />
 
-      {/* Progress */}
       <div className="flex items-center justify-between px-4 py-2">
         <span className="text-[9px] font-display uppercase tracking-[0.2em] font-bold text-foreground">Session Progress</span>
         <span className="text-[9px] font-display uppercase tracking-[0.2em] font-bold text-muted-foreground">{totalVoted}/{totalRestaurants} Voted</span>
       </div>
 
-      {/* Card */}
       <div className="flex flex-1 items-center justify-center px-4">
         <motion.div
           style={{ x, rotate, opacity }}
@@ -106,7 +106,7 @@ const Voting = () => {
               {tags.length > 0 && (
                 <div className="absolute bottom-2 left-2 flex flex-wrap gap-1">
                   {tags.map((tag, i) => (
-                    <span key={i} className="rounded-full bg-squad-pink border-2 border-foreground px-2 py-0.5 text-[8px] font-display uppercase font-bold text-foreground">{tag}</span>
+                    <span key={i} className={`rounded-full ${tagColors[i % tagColors.length]} border-2 border-foreground px-2 py-0.5 text-[8px] font-display uppercase font-bold text-foreground`}>{tag}</span>
                   ))}
                 </div>
               )}
@@ -117,7 +117,7 @@ const Voting = () => {
                 <h3 className="font-display text-base font-bold text-foreground uppercase">{current.restaurant_name}</h3>
                 {current.link && (
                   <a href={current.link} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
-                    className="flex h-8 w-8 items-center justify-center rounded-xl border-2 border-foreground bg-squad-pink"
+                    className="flex h-8 w-8 items-center justify-center rounded-xl border-2 border-foreground bg-squad-yellow"
                     style={{ boxShadow: '2px 2px 0px 0px hsl(0 0% 8%)' }}>
                     <ExternalLink className="h-3.5 w-3.5 text-foreground" strokeWidth={2.5} />
                   </a>
@@ -133,15 +133,14 @@ const Voting = () => {
         </motion.div>
       </div>
 
-      {/* Buttons */}
       <div className="flex items-center justify-center gap-3 px-4 pb-5 pt-3">
         <button onClick={() => castVote('reject')}
-          className="flex items-center gap-2 rounded-full border-2 border-foreground bg-card px-6 py-3 font-display text-[11px] font-bold uppercase tracking-[0.15em] text-foreground"
+          className="flex items-center gap-2 rounded-full border-2 border-foreground bg-squad-peach px-6 py-3 font-display text-[11px] font-bold uppercase tracking-[0.15em] text-foreground"
           style={{ boxShadow: shadow }}>
           <ArrowLeft className="h-4 w-4" strokeWidth={2.5} /> Reject
         </button>
         <button onClick={() => castVote('accept')}
-          className="flex items-center gap-2 rounded-full border-2 border-foreground bg-squad-pink px-6 py-3 font-display text-[11px] font-bold uppercase tracking-[0.15em] text-foreground"
+          className="flex items-center gap-2 rounded-full border-2 border-foreground bg-squad-mint px-6 py-3 font-display text-[11px] font-bold uppercase tracking-[0.15em] text-foreground"
           style={{ boxShadow: shadow }}>
           Accept <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
         </button>

@@ -35,7 +35,7 @@ const Profile = () => {
       <PageHeader title="Profile" />
       <div className="flex-1 px-4 pt-6 space-y-5">
         <div className="flex flex-col items-center">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-foreground bg-squad-pink font-display text-xl font-bold text-foreground"
+          <div className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-foreground bg-squad-lavender font-display text-xl font-bold text-foreground"
             style={{ boxShadow: shadow }}>{name?.charAt(0)?.toUpperCase() || '?'}</div>
           <p className="mt-2 text-[9px] font-display uppercase tracking-[0.2em] text-muted-foreground">{user?.email}</p>
         </div>
@@ -49,14 +49,14 @@ const Profile = () => {
             </div>
           </div>
           <button onClick={handleSave} disabled={saving}
-            className="flex w-full items-center justify-center gap-2 h-11 rounded-full bg-squad-pink border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 h-11 rounded-full bg-squad-mint border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground disabled:opacity-50"
             style={{ boxShadow: shadow }}>
             <Save className="h-4 w-4" strokeWidth={2.5} /> {saving ? 'Saving...' : 'Save'}
           </button>
         </div>
 
         <button onClick={signOut}
-          className="flex w-full items-center justify-center gap-2 h-11 rounded-full bg-card border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
+          className="flex w-full items-center justify-center gap-2 h-11 rounded-full bg-squad-peach border-2 border-foreground font-display text-[11px] font-bold uppercase tracking-[0.2em] text-foreground"
           style={{ boxShadow: shadow }}>
           <LogOut className="h-4 w-4" strokeWidth={2.5} /> Sign Out
         </button>
